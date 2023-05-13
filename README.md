@@ -1,5 +1,5 @@
 # Introduction 
-Project to tryouot the features of Microsoft Orleans
+Project to tryout the features of Microsoft Orleans
 
 # Getting Started
 1.	Build and start silo's
