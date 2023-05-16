@@ -24,11 +24,6 @@ static async Task<IHost> StartSiloAsync()
     .UseOrleans(builder =>
     {
       builder.UseLocalhostClustering().ConfigureLogging(logger => logger.AddConsole());
-      builder.Configure<ClusterOptions>(options =>
-      {
-        options.ClusterId = "ClusterGroupName";
-        options.ServiceId = "ClusterServiceId";
-      });
     });
 
   var host = builder.Build();

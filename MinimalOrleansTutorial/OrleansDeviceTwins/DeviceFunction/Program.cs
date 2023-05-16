@@ -10,11 +10,6 @@ internal class Program
         .UseOrleansClient(client =>
         {
           client.UseLocalhostClustering();
-          client.Configure<ClusterOptions>(options =>
-          {
-            options.ClusterId = "ClusterGroupName";
-            options.ServiceId = "ClusterServiceId";
-          });
         })
         .Build();
 
