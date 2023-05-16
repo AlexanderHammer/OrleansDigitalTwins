@@ -13,10 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeviceFunction", "DeviceFun
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grain Interfaces", "Grain Interfaces\Grain Interfaces.csproj", "{8E847069-AF97-44C3-BF62-31CF5D67841D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IoTHubFunctions", "IoTHubFunctions", "{71F19E7E-75E9-4243-8722-89D0ADC599E3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTHubFunction", "IoTHubFunction\IoTHubFunction.csproj", "{7DCF6AF2-5B1A-4CE4-9852-AE96777F0578}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Silo", "Silo\Silo.csproj", "{CFF7B753-AC5B-4812-B2F0-7744D9B22AFA}"
 EndProject
 Global
