@@ -3,13 +3,13 @@
 [GenerateSerializer]
 public sealed record Device(bool Connected, int Rssi, List<Tier> Tiers)
 {
-  public bool Equals(Device other)
+  public bool Equals(Device? other)
   {
-    if (other == null || Connected != other.Connected || Rssi != other.Rssi) return false;
+    if (other != null && (Connected != other.Connected || Rssi != other.Rssi)) return false;
 
-    foreach (var tier in Tiers)
+    foreach (Tier tier in Tiers)
     {
-      var otherTier = other.Tiers
+      Tier? otherTier = other?.Tiers
           .FirstOrDefault(x => x.TierNumber == tier.TierNumber);
       if (otherTier == null)
         return false;
@@ -17,5 +17,10 @@ public sealed record Device(bool Connected, int Rssi, List<Tier> Tiers)
         return false;
     }
     return true;
+  }
+
+  public override int GetHashCode()
+  {
+    return HashCode.Combine(Connected, Rssi, Tiers);
   }
 }

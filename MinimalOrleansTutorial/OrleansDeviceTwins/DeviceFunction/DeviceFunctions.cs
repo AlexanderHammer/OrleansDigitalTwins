@@ -24,9 +24,9 @@ public class DeviceFunctions
   public async Task<HttpResponseData> UpdateDevice([HttpTrigger(AuthorizationLevel.Function, "put")] HttpRequestData req)
   {
 
-    var data = JsonSerializer.Deserialize<UpdateDeviceRequest>(req.Body);
-    var newDeviceState = new Device(data.Connected, data.Rssi, data.Tiers.ToList());
-    var grain = _factory.GetGrain<IDeviceGrain>($"device@{data.DeviceId}");
+    UpdateDeviceRequest? data = JsonSerializer.Deserialize<UpdateDeviceRequest>(req.Body);
+    Device newDeviceState = new (data.Connected, data.Rssi, data.Tiers.ToList());
+    IDeviceGrain? grain = _factory.GetGrain<IDeviceGrain>($"device@{data.DeviceId}");
     await grain.UpdateDevice(newDeviceState);
     return req.CreateResponse(HttpStatusCode.OK);
   }
