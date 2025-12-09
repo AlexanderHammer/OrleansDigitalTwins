@@ -1,0 +1,7 @@
+﻿### PUT request to silo
+PUT http://localhost:7173/api/UpdateDevice
+Content-Type: application/json
+Cookie: key=first-value
+
+{ "id":"09F5EF7F-6F43-4F5A-AC12-229F9555CA10", "connected": true, "rssi":21, "tiers":[] }
+###

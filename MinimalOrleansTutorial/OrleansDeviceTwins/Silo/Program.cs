@@ -1,10 +1,9 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Orleans.Configuration;
 
 try
 {
-  using var host = await StartSiloAsync();
+  using IHost host = await StartSiloAsync();
   Console.WriteLine("\n\n Press Enter to terminate...\n\n");
   Console.ReadLine();
 
@@ -20,13 +19,13 @@ catch (Exception ex)
 
 static async Task<IHost> StartSiloAsync()
 {
-  var builder = new HostBuilder()
+  IHostBuilder? builder = new HostBuilder()
     .UseOrleans(builder =>
     {
       builder.UseLocalhostClustering().ConfigureLogging(logger => logger.AddConsole());
     });
 
-  var host = builder.Build();
+  IHost host = builder.Build();
   await host.StartAsync();
 
   return host;

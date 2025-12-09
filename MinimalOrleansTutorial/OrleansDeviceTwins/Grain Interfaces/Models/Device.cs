@@ -5,7 +5,7 @@ public sealed record Device(bool Connected, int Rssi, List<Tier> Tiers)
 {
   public bool Equals(Device? other)
   {
-    if (other != null && (Connected != other.Connected || Rssi != other.Rssi)) return false;
+    if (other is not null && (Connected != other.Connected || Rssi != other.Rssi)) return false;
 
     foreach (Tier tier in Tiers)
     {

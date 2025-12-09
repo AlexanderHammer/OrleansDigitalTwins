@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <ServerGarbageCollection>true</ServerGarbageCollection>
@@ -11,9 +11,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0-preview.3.23174.8" />
-      <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0-preview.3.23174.8" />
-      <PackageReference Include="Microsoft.Orleans.Server" Version="7.1.2" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
+      <PackageReference Include="Microsoft.Orleans.Server" Version="9.2.1" />
         <ProjectReference Include="..\Grains\Grains.csproj" />
     </ItemGroup>
 
