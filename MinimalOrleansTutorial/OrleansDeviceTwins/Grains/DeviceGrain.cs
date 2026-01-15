@@ -15,15 +15,11 @@ public class DeviceGrain(ILogger<DeviceGrain> logger) : Grain, IDeviceGrain
   public override async Task OnActivateAsync(CancellationToken cancellationToken)
   {
     _logger.LogInformation("{IdentityString} activated\n", IdentityString);
-    RegisterTimer(
-        _ =>
-        {
-          CheckConnectionStatus();
-          return Task.CompletedTask;
-        },
-        null,
-        TimeSpan.FromSeconds(15),
-        TimeSpan.FromSeconds(15));
+    this.RegisterGrainTimer(CheckConnectionStatus, new()
+      {
+        DueTime = TimeSpan.FromSeconds(15), 
+        Period = TimeSpan.FromSeconds(15),
+      });
     await base.OnActivateAsync(cancellationToken);
   }
 
@@ -58,7 +54,7 @@ public class DeviceGrain(ILogger<DeviceGrain> logger) : Grain, IDeviceGrain
     _logger.LogInformation("{Serialize}", JsonSerializer.Serialize(_device));
     return Task.FromResult(_device);
   }
-  private void CheckConnectionStatus()
+  private Task CheckConnectionStatus(CancellationToken token)
   {
     if (_device != null && DateTime.Now - _lastReceived >= TimeSpan.FromSeconds(30) && _device.Connected)
     {
@@ -66,5 +62,6 @@ public class DeviceGrain(ILogger<DeviceGrain> logger) : Grain, IDeviceGrain
       _device = _device with { Connected = false };
     }
     _logger.LogInformation(@"CheckConnectionStatus completed for {IdentityString}:\n{Serialize}\n", IdentityString, JsonSerializer.Serialize(_device));
+    return Task.CompletedTask;
   }
 }
