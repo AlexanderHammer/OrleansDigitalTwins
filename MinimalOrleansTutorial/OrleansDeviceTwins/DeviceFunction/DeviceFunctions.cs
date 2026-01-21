@@ -20,7 +20,7 @@ public class DeviceFunctions(IGrainFactory factory)
     if(data == null) return req.CreateResponse(HttpStatusCode.BadRequest);
     
     Device newDeviceState = new (data.Connected, data.Rssi, data.Tiers.ToList());
-    IDeviceGrain? grain = _factory.GetGrain<IDeviceGrain>($"device@{data.DeviceId}");
+    IDeviceGrain grain = _factory.GetGrain<IDeviceGrain>($"device@{data.DeviceId}");
     await grain.UpdateDevice(newDeviceState);
     return req.CreateResponse(HttpStatusCode.OK);
   }
