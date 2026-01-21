@@ -6,14 +6,14 @@ namespace DeviceFunction.HttpFunction.Models;
 public class UpdateDeviceRequest
 {
   [JsonPropertyName("id")]
-  public Guid DeviceId { get; set; }
+  public required Guid DeviceId { get; init; }
 
   [JsonPropertyName("connected")]
-  public bool Connected { get; set; }
+  public required bool Connected { get; init; }
 
   [JsonPropertyName("rssi")]
-  public int Rssi { get; set; }
+  public required int Rssi { get; init; }
 
   [JsonPropertyName("tiers")]
-  public Tier[] Tiers { get; set; }
+  public required Tier[] Tiers { get; init; }
 }
