@@ -22,7 +22,7 @@ namespace Orleans
     [LoggerMessage(LogLevel.Information, "Device {identityString} disconnected")]
     partial void LogDeviceIdentityStringDisconnected(string identityString);
 
-    [LoggerMessage(LogLevel.Information, @"CheckConnectionStatus completed for {identityString}:\n{serialize}\n")]
+    [LoggerMessage(LogLevel.Information, @"CheckConnectionStatus completed for {identityString}: {serialize}")]
     partial void LogCheckConnectionStatusCompletedForIdentity(string identityString, string serialize);
 
     [LoggerMessage(LogLevel.Information, "Device state unchanged: {id}")]
