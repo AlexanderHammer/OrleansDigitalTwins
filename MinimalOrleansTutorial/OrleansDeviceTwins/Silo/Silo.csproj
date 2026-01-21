@@ -13,7 +13,7 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
       <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
-      <PackageReference Include="Microsoft.Orleans.Server" Version="9.2.1" />
+      <PackageReference Include="Microsoft.Orleans.Server" Version="10.0.0" />
         <ProjectReference Include="..\Grains\Grains.csproj" />
     </ItemGroup>
 
