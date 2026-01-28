@@ -9,15 +9,12 @@ public partial class DeviceGrain(ILogger<DeviceGrain> logger) : Grain, IDeviceGr
 {
   private Device? _device;
   private DateTime _lastReceived = DateTime.MinValue;
+  private IGrainTimer? _timer;
 
   public override async Task OnActivateAsync(CancellationToken cancellationToken)
   {
     LogIdentityStringActivated(IdentityString);
-    this.RegisterGrainTimer(CheckConnectionStatus, new()
-      {
-        DueTime = TimeSpan.FromSeconds(15), 
-        Period = TimeSpan.FromSeconds(15),
-      });
+    RegisterCheckStateTimer();
     await base.OnActivateAsync(cancellationToken);
   }
 
@@ -33,7 +30,7 @@ public partial class DeviceGrain(ILogger<DeviceGrain> logger) : Grain, IDeviceGr
     {
       LogDeviceCreatedId(IdentityString);
     }
-    
+
     if (_device is not null && _device.Equals(device))
     {
       LogDeviceStateUnchangedId(IdentityString);
@@ -42,21 +39,34 @@ public partial class DeviceGrain(ILogger<DeviceGrain> logger) : Grain, IDeviceGr
     {
       LogDeviceChangedId(IdentityString);
     }
-    
-    _lastReceived = DateTime.Now;
+
+    _lastReceived = DateTime.UtcNow;
     _device = device;
 
+    if (_timer is null) RegisterCheckStateTimer();
     LogSerialize(JsonSerializer.Serialize(_device));
     return Task.FromResult(_device);
   }
+
   private Task CheckConnectionStatus(CancellationToken token)
   {
-    if (_lastReceived != DateTime.MinValue && DateTime.Now - _lastReceived >= TimeSpan.FromSeconds(30) && _device!.Connected)
+    if (_lastReceived != DateTime.MinValue &&
+        DateTime.UtcNow - _lastReceived >= TimeSpan.FromMinutes(2) &&
+        _device!.Connected)
     {
       LogDeviceIdentityStringDisconnected(IdentityString);
       _device = _device with { Connected = false };
+      _timer?.Dispose();
+      _timer = null;
     }
+
     LogCheckConnectionStatusCompletedForIdentity(IdentityString, JsonSerializer.Serialize(_device));
     return Task.CompletedTask;
+  }
+
+  private void RegisterCheckStateTimer()
+  {
+    _timer = this.RegisterGrainTimer(CheckConnectionStatus,
+      new() { KeepAlive = true, DueTime = TimeSpan.FromMinutes(1), Period = TimeSpan.FromMinutes(1), });
   }
 }
